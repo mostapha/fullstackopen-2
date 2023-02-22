@@ -59,11 +59,32 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    
+
+    // check name
+    if (!body.name || body.name.trim() === "") {
+        return response.status(400).json({
+            error: 'the name is not valid'
+        })
+    }
+
+    if (persons.some(p => p.name === body.name)) {
+        return response.status(400).json({
+            error: 'the name must be unique'
+        })
+    }
+
+    if (!body.number || body.number.trim() === "") {
+        return response.status(400).json({
+            error: 'the number is not valid'
+        })
+    }
+
+
     const randomId = Math.floor(Math.random() * 1000000);
 
     const newPerson = {
-        ...body,
+        name: body.name,
+        number: body.number,
         id: randomId
     }
     persons.push(newPerson);

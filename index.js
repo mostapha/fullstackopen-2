@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
+
+app.use(morgan('tiny'))
 app.use(express.json())
 
 
@@ -27,9 +30,11 @@ let persons = [
     }
 ]
 
+
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
+
 
 app.get('/info', (request, response) => {
     response.send(`
@@ -37,6 +42,7 @@ app.get('/info', (request, response) => {
     <p>${new Date()}</p>
     `)
 })
+
 
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id);
@@ -49,6 +55,7 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
+
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id);
 
@@ -56,6 +63,7 @@ app.delete('/api/persons/:id', (request, response) => {
 
     response.status(204).end()
 })
+
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
@@ -91,6 +99,7 @@ app.post('/api/persons', (request, response) => {
 
     response.json(newPerson)
 })
+
 
 const PORT = 3001
 app.listen(PORT, () => {

@@ -36,7 +36,7 @@ app.get('/info', (request, response) => {
         <p>Phonebook has info for ${people.length} people</p>
         <p>${new Date()}</p>
         `)
-    })
+    });
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
